@@ -13,12 +13,23 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class RealisationResource extends Resource
 {
     protected static ?string $model = Realisation::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBriefcase;
+
+    protected static ?string $navigationLabel = 'Réalisations';
+
+    protected static UnitEnum|string|null $navigationGroup = 'Contenu du site';
+
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $modelLabel = 'Réalisation';
+
+    protected static ?string $pluralModelLabel = 'Réalisations';
 
     protected static ?string $recordTitleAttribute = 'titre';
 
