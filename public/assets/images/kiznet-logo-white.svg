@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 100" width="320" height="100">
+  <!-- Symbole tourbillon blanc/bleu clair -->
+  <g transform="translate(8, 10)">
+    <path d="M42,10 C20,10 4,26 4,48 C4,70 20,86 42,86 C52,86 61,82 68,75" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+    <path d="M42,22 C27,22 16,33 16,48 C16,63 27,74 42,74 C49,74 55,71 60,66" fill="none" stroke="#29ABE2" stroke-width="6" stroke-linecap="round"/>
+    <path d="M42,34 C34,34 28,40 28,48 C28,56 34,62 42,62 C46,62 50,60 53,57" fill="none" stroke="#29ABE2" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="42" cy="48" r="5" fill="#29ABE2"/>
+  </g>
+  <!-- KIZ en blanc -->
+  <text x="88" y="62" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="46" fill="#ffffff" letter-spacing="-1">KIZ</text>
+  <!-- NET en bleu -->
+  <text x="185" y="62" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="46" fill="#29ABE2" letter-spacing="-1">NET</text>
+  <!-- SERVICES en blanc -->
+  <text x="88" y="82" font-family="Arial, sans-serif" font-weight="400" font-size="16" fill="rgba(255,255,255,0.85)" letter-spacing="6">SERVICES</text>
+</svg>
