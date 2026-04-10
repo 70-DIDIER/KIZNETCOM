@@ -7,7 +7,7 @@
   <meta name="description" content="KizNet Service — Télécommunication et ingénierie logicielle à Pointe-Noire, Congo Brazzaville." />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <title>KizNet Service | On connecte. On construit. On sécurise.</title>
-  <link rel="shortcut icon" href="{{ asset('logov2.jpeg') }}" type="image/jpeg" />
+  <link rel="shortcut icon" href="{{ $setting->logoUrl() }}" type="image/jpeg" />
   <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
   <link rel="stylesheet" href="{{ asset('assets/css/lineicons.css') }}" />
   <link rel="stylesheet" href="{{ asset('assets/css/tiny-slider.css') }}" />
@@ -61,22 +61,63 @@
       if (form) {
         form.addEventListener('submit', function (e) {
           e.preventDefault();
+
+          // Validation côté client
           var valid = true;
-          var name = document.getElementById('contactName');
-          var email = document.getElementById('contactEmail');
-          var message = document.getElementById('contactMessage');
-          [name, email, message].forEach(function (field) {
+          var nameField    = document.getElementById('contactName');
+          var emailField   = document.getElementById('contactEmail');
+          var messageField = document.getElementById('contactMessage');
+          [nameField, emailField, messageField].forEach(function (field) {
             var ok = field.value.trim().length > 0;
             if (field.type === 'email') ok = ok && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value);
             if (!ok) { field.classList.add('is-invalid'); field.classList.remove('is-valid'); valid = false; }
-            else { field.classList.remove('is-invalid'); field.classList.add('is-valid'); }
+            else      { field.classList.remove('is-invalid'); field.classList.add('is-valid'); }
           });
-          if (valid) {
-            document.getElementById('formSuccess').style.display = 'block';
-            form.reset();
-            [name, email, message].forEach(function (f) { f.classList.remove('is-valid'); });
-            setTimeout(function () { document.getElementById('formSuccess').style.display = 'none'; }, 6000);
-          }
+          if (!valid) return;
+
+          // Envoi AJAX
+          var btn       = document.getElementById('contactSubmitBtn');
+          var successEl = document.getElementById('formSuccess');
+          var errorEl   = document.getElementById('formError');
+          var errorText = document.getElementById('formErrorText');
+
+          btn.disabled = true;
+          btn.innerHTML = 'Envoi en cours… <i class="lni lni-spinner-arrow" style="margin-left:6px;"></i>';
+          successEl.style.display = 'none';
+          errorEl.style.display   = 'none';
+
+          var formData = new FormData(form);
+
+          fetch('{{ route('contact.send') }}', {
+            method: 'POST',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            body: formData,
+          })
+          .then(function (res) {
+            return res.json().then(function (data) { return { status: res.status, data: data }; });
+          })
+          .then(function (res) {
+            if (res.status === 200) {
+              successEl.style.display = 'block';
+              form.reset();
+              [nameField, emailField, messageField].forEach(function (f) { f.classList.remove('is-valid'); });
+              setTimeout(function () { successEl.style.display = 'none'; }, 8000);
+            } else {
+              var msg = res.data.errors
+                ? Object.values(res.data.errors).flat().join(' ')
+                : (res.data.message || 'Une erreur est survenue.');
+              errorText.textContent = msg;
+              errorEl.style.display = 'block';
+            }
+          })
+          .catch(function () {
+            errorText.textContent = 'Impossible d\'envoyer le message. Vérifiez votre connexion.';
+            errorEl.style.display = 'block';
+          })
+          .finally(function () {
+            btn.disabled = false;
+            btn.innerHTML = 'Envoyer le message <i class="lni lni-telegram-original" style="margin-left:6px;"></i>';
+          });
         });
       }
     })();

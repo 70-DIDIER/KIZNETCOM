@@ -11,6 +11,9 @@ fi
 # Run migrations
 php artisan migrate --force
 
+# Create storage symlink for public files
+php artisan storage:link --force 2>/dev/null || true
+
 # Cache config/routes/views in production
 if [ "$APP_ENV" = "production" ]; then
     php artisan config:cache

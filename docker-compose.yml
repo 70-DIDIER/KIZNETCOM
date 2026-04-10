@@ -7,19 +7,6 @@ services:
     restart: unless-stopped
     ports:
       - "8000:80"
-    environment:
-      APP_ENV: local
-      APP_DEBUG: true
-      APP_URL: http://localhost:8000
-      DB_CONNECTION: mysql
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_DATABASE: kiznetcom
-      DB_USERNAME: root
-      DB_PASSWORD: ""
-      SESSION_DRIVER: database
-      CACHE_STORE: database
-      QUEUE_CONNECTION: database
     env_file:
       - .env
     volumes:
@@ -36,13 +23,14 @@ services:
     container_name: laravel_db
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: kiznetcom
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_DATABASE: ${DB_DATABASE:-kiznetcom}
+      MYSQL_USER: ${DB_USERNAME:-kiznet}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "--password=${DB_ROOT_PASSWORD}"]
       interval: 10s
       timeout: 5s
       retries: 5

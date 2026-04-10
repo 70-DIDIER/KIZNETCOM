@@ -6,7 +6,7 @@
         <div class="col-lg-12">
           <nav class="navbar navbar-expand-lg">
             <a class="navbar-brand" href="{{ url('/') }}">
-              <img src="{{ asset('logov2.jpeg') }}" alt="KizNet Services" height="52" style="max-height:52px;object-fit:contain;" />
+              <img src="{{ $setting->logoUrl() }}" alt="KizNet Services" height="52" style="max-height:52px;object-fit:contain;" />
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNine"
               aria-controls="navbarNine" aria-expanded="false" aria-label="Toggle navigation">

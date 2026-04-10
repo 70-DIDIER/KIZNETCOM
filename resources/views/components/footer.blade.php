@@ -6,7 +6,7 @@
           <div class="footer-widget">
             <div class="footer-logo">
               <a href="{{ url('/') }}">
-                <img src="{{ asset('logov2.jpeg') }}" alt="KizNet Services" height="60" style="max-height:60px;object-fit:contain;" />
+                <img src="{{ $setting->logoUrl() }}" alt="KizNet Services" height="60" style="max-height:60px;object-fit:contain;" />
               </a>
             </div>
             <p class="footer-desc">Votre partenaire technologique à Pointe-Noire. Télécommunication, ingénierie logicielle et cybersécurité pour votre transformation numérique.</p>
@@ -48,9 +48,8 @@
           <div class="footer-widget">
             <h5 class="footer-title">Contact</h5>
             <ul class="footer-contact">
-              <li><i class="lni lni-phone"></i><a href="tel:+24206931747">+242 06 931 74 77</a></li>
-              <li><i class="lni lni-phone"></i><a href="tel:+24205537102">+242 05 537 10 28</a></li>
-              <li><i class="lni lni-envelope"></i><a href="mailto:contact@kiznetservice.com">contact@kiznetservice.com</a></li>
+              <li><i class="lni lni-phone"></i><a href="tel:{{ preg_replace('/\s+/', '', $setting->telephone()) }}">{{ $setting->telephone() }}</a></li>
+              <li><i class="lni lni-envelope"></i><a href="mailto:{{ $setting->email() }}">{{ $setting->email() }}</a></li>
               <li><i class="lni lni-map-marker"></i>Pointe-Noire, Congo</li>
               <li><i class="lni lni-timer"></i>Lun–Sam 8h–18h | Urgences 24/7</li>
             </ul>

@@ -18,31 +18,32 @@
         <div class="col-lg-7 col-12">
           <div class="contact-form-wrap">
             <form id="contactForm" novalidate>
+              @csrf
               <div class="row">
                 <div class="col-md-6">
                   <div class="mb-3">
                     <label for="contactName" class="form-label">Nom complet <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="contactName" placeholder="Votre nom complet" required />
+                    <input type="text" class="form-control" id="contactName" name="nom" placeholder="Votre nom complet" required />
                     <div class="invalid-feedback">Veuillez entrer votre nom.</div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="mb-3">
                     <label for="contactEmail" class="form-label">Email <span class="text-danger">*</span></label>
-                    <input type="email" class="form-control" id="contactEmail" placeholder="votre@email.com" required />
+                    <input type="email" class="form-control" id="contactEmail" name="email" placeholder="votre@email.com" required />
                     <div class="invalid-feedback">Veuillez entrer un email valide.</div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="mb-3">
                     <label for="contactPhone" class="form-label">Téléphone</label>
-                    <input type="tel" class="form-control" id="contactPhone" placeholder="+242 06 000 00 00" />
+                    <input type="tel" class="form-control" id="contactPhone" name="telephone" placeholder="+242 06 000 00 00" />
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="mb-3">
                     <label for="contactService" class="form-label">Service concerné</label>
-                    <select class="form-select" id="contactService">
+                    <select class="form-select" id="contactService" name="service">
                       <option value="">-- Choisir un service --</option>
                       <option>Caméras de Surveillance (CCTV/IP)</option>
                       <option>Installation Réseau LAN</option>
@@ -62,14 +63,19 @@
                 <div class="col-12">
                   <div class="mb-3">
                     <label for="contactMessage" class="form-label">Message <span class="text-danger">*</span></label>
-                    <textarea class="form-control" id="contactMessage" rows="5" placeholder="Décrivez votre projet ou votre besoin..." required></textarea>
+                    <textarea class="form-control" id="contactMessage" name="message" rows="5" placeholder="Décrivez votre projet ou votre besoin..." required></textarea>
                     <div class="invalid-feedback">Veuillez entrer votre message.</div>
                   </div>
                 </div>
                 <div class="col-12">
-                  <button type="submit" class="btn primary-btn">Envoyer le message <i class="lni lni-telegram-original" style="margin-left:6px;"></i></button>
+                  <button type="submit" id="contactSubmitBtn" class="btn primary-btn">
+                    Envoyer le message <i class="lni lni-telegram-original" style="margin-left:6px;"></i>
+                  </button>
                   <div id="formSuccess" class="alert alert-success mt-3" style="display:none;border-radius:8px;">
                     <i class="lni lni-checkmark-circle"></i> Merci ! Votre message a été envoyé. Nous vous répondrons dans les plus brefs délais.
+                  </div>
+                  <div id="formError" class="alert alert-danger mt-3" style="display:none;border-radius:8px;">
+                    <i class="lni lni-warning"></i> <span id="formErrorText">Une erreur est survenue. Veuillez réessayer.</span>
                   </div>
                 </div>
               </div>
@@ -82,15 +88,14 @@
               <div class="contact-info-icon"><i class="lni lni-phone"></i></div>
               <div class="contact-info-content">
                 <h6>Téléphone</h6>
-                <p><a href="tel:+24206931747">+242 06 931 74 77</a></p>
-                <p><a href="tel:+24205537102">+242 05 537 10 28</a></p>
+                <p><a href="tel:{{ preg_replace('/\s+/', '', $setting->telephone()) }}">{{ $setting->telephone() }}</a></p>
               </div>
             </div>
             <div class="single-contact-info">
               <div class="contact-info-icon"><i class="lni lni-envelope"></i></div>
               <div class="contact-info-content">
                 <h6>Email</h6>
-                <p><a href="mailto:contact@kiznetservice.com">contact@kiznetservice.com</a></p>
+                <p><a href="mailto:{{ $setting->email() }}">{{ $setting->email() }}</a></p>
               </div>
             </div>
             <div class="single-contact-info">

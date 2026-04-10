@@ -6,7 +6,7 @@
     <div class="sidebar-content">
       <div class="sidebar-logo">
         <a href="{{ url('/') }}">
-          <img src="{{ asset('logov2.jpeg') }}" alt="KizNet Services" height="60" style="max-height:60px;object-fit:contain;" />
+          <img src="{{ $setting->logoUrl() }}" alt="KizNet Services" height="60" style="max-height:60px;object-fit:contain;" />
         </a>
       </div>
       <p class="text" style="margin-top:12px;color:#666;">On connecte. On construit. On sécurise.</p>
